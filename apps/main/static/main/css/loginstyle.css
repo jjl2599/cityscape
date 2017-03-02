@@ -1,0 +1,48 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Raleway', sans-serif;
+}
+body{
+  background: url('index.jpeg') no-repeat center fixed;
+  background-size: cover;
+  width: 0px auto;
+  height: 0px auto;
+}
+.title{
+  margin: 0px auto;
+  margin-top: 50px;
+  padding: 20px 20px;
+  font-size: 200%;
+  width: 300px;
+  height: 75px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 30px;
+  text-align: center;
+}
+.title #descrip{
+  font-size: 50%;
+  text-align: center;
+}
+.containers{
+  margin: 0px auto;
+  margin-top: 50px;
+  padding: 20px 20px;
+  width: 350px;
+  height: 400px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 30px;
+}
+
+a{
+  text-decoration: none;
+  color: pink;
+}
+
+h1, h3, p{
+  color:white;
+}
+
+.button{
+  color:black
+}

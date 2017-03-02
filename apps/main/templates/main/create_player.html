@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+  <title>Successful Registration</title>
+  {% load static %}
+  <link rel='stylesheet' type='text/css' href="{% static '/main/css/createstyle.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+</head>
+<body>
+  <div class="preview">
+    <h2>Classes:</h2>
+    <div class="descrip">
+      <h3>The Mafia</h3>
+      <img src="../static/main/images/Mafia.gif" height=100 width=100 alt="Mafia">
+      <p>Often deals in shady businesses but it's always for the greater good... making ridculous amount of money.
+      <p>[Starts with more money and attack tokens]</p>
+    </div>
+    <div class="descrip">
+      <h3>The Security Guard</h3>
+      <img src="../static/main/images/Security.gif" height=100 width=100 alt="Security">
+      <p>Always on watch for criminals, but mostly surfs Reddit cause nothing really happens.</p>
+      <p>[Starts with more health but less money.]
+    </div>
+    <div class="descrip">
+      <h3>The Programmer</h3>
+      <img src="../static/main/images/Programmer.gif" height=100 width=100 alt="Mafia">
+      <p>Mostly spends their time indoors, only comes out for sustenance.</p>
+      <p>[Starts with a little more money, one Super Coffee, but less health.]
+    </div>
+  </div>
+  <div class="container">
+    <h2>Thanks {{ curr_user.name }}, you successfully registered! Now it's time to select your avatar and join the fight!</h2>
+    {% if messages %}
+      {% for i in messages %}
+        <p>{{i.message }}</p>
+      {% endfor %}
+    {% endif %}
+    <div id="creator">
+
+      <p>Character Alias:</p>
+      <p>{{ curr_user.alias }}</p>
+      <p>
+        <form action="/create_player/{{curr_user.id}}" method="post">
+          {% csrf_token %}
+          <p>Class Type:</p>
+          <select name="class_type">
+            <option disabled selected></option>
+            <option value="Mafia">Mafia</option>
+            <option value="Security">Security</option>
+            <option value="Programmer">Programmer</option>
+          </select>
+          <input class="button" type='submit' value='Create Your Player'>
+        </form>
+      </p>
+
+    </div>
+  </div>
+</body>
+</html>

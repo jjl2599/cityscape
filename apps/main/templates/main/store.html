@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+  <title>Homepage</title>
+  {% load static %}
+  <link rel='stylesheet' type='text/css' href="{% static '/main/css/storestyle.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div id="userinfo">
+      <button class="button"><a href='/home'>Go back to the Arena</a></button>
+      <button class="button"><a href='/logout'>Logout</a></button>
+    </div>
+
+    <div class="face">
+      <img src="../static/main/images/face2.gif" height=100 width=100 alt="face">
+      <div class="says">
+        {% if messages %}
+          {% for i in messages %}
+            <p>{{i.message }}</p>
+          {% endfor %}
+        {% else %}
+          <p>Welcome to the store {{curr_user.alias}}! Feel free to buy anything...if you have the money.</p>
+        {% endif %}
+      </div>
+    </div>
+    <p>Your Money: ${{current_player.money}}</p>
+    <div class="item">
+      <img src="../static/main/images/Attack.gif" height=100 width=100 alt="Attack">
+      <p>Attack Token:</p>
+      <p>This shiny little coin let's you attack other players!</p>
+      <p>(Token used to attack)</p>
+      <p>$25<a href="/buy_item/{{current_player.id}}/attack"><button class="press">BUY?</button></a></p>
+    </div>
+
+    <div class="item">
+      <img src="../static/main/images/Medicine.gif" height=100 width=100 alt="Medicine">
+      <p>Medicine:</p>
+      <p>An all purpose heal kit; heals bruises, broken bones, crippling depression, etc.</p>
+      <p>(Heals 2 hit points)</p>
+      <p>$50<a href="/buy_item/{{current_player.id}}/medicine"><button class="press">BUY?</button></a></p>
+    </div>
+
+    <div class="item">
+      <img src="../static/main/images/Coffee.gif" height=100 width=100 alt="Coffee">
+      <p>Super Coffee:</p>
+      <p>Made with the finest dollar store coffee beans. The consistency... is a bit thick, but it packs a punch and wakes you up.</p>
+      <p>(Let's your character back into the Arena)</p>
+      <p>$100<a href="/buy_item/{{current_player.id}}/coffee"><button class="press">BUY?</button></a></p>
+    </div>
+
+  </div>
+<body>
+</html>

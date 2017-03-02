@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+  <title>Homepage</title>
+  {% load static %}
+  <link rel='stylesheet' type='text/css' href="{% static '/main/css/mainstyle.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+</head>
+<body>
+  <div id="userinfo">
+    <h2>The CityScape</h2>
+    <p id="welcome">Welcome {{ curr_user.name }}!</p>
+    <button class="button"><a href='/store'>Store</a></button>
+    <button class="button"><a href='/logout'>Logout</a></button>
+  </div>
+
+  <div class="container">
+    <div class="face">
+      <img src="../static/main/images/face.gif" height=100 width=100 alt="face">
+      <div class="says">
+        {% if messages %}
+          {% for i in messages %}
+            <p>{{i.message }}</p>
+          {% endfor %}
+        {% else %}
+          <p>Fight!</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div id="alive">
+      <h1>[ Active ]</h1>
+      {% for player in players %}
+        <div class="single_player">
+          {% if player.class_type == "Mafia" %}
+            <img src="../static/main/images/Mafia.gif" height=100 width=100 alt="Mafia">
+          {% endif %}
+          {% if player.class_type == "Security" %}
+            <img src="../static/main/images/Security.gif" height=100 width=100 alt="Security">
+          {% endif %}
+          {% if player.class_type == "Programmer" %}
+            <img src="../static/main/images/Programmer.gif" height=100 width=100 alt="Programmer">
+          {% endif %}
+          {% if player.user.id == curr_user.id %}
+            <h3 class="me">My Character</h3>
+          {% endif %}
+          <p><span class="highlight">Character:</span> {{player.user.alias}}</p>
+          <p><span class="highlight">Owner:</span> {{player.user.name}}</p>
+          <p><span class="highlight">Class:</span> {{player.class_type}}</p>
+          <p><span class="highlight">Wealth:</span>
+            {% if player.money >= 300 %}
+              Rich
+            {% elif player.money >= 100 and player.money < 300 %}
+              Just getting by
+            {% elif player.money < 100 %}
+              Poor
+            {% elif player.money == 0 %}
+              Broke
+            {% endif %}
+          </p>
+          <p><span class="highlight">Status:</span>
+            {% if player.health >= 3 %}
+              <span class="green">Healthy</span>
+            {% elif player.health < 3 %}
+              <span class="yellow">Weak</span>
+            {% elif player.health == 1 %}
+              <span class="red">Hurt</span>
+            {% endif %}
+          </p>
+
+          {% if player.user.id != curr_user.id %}
+            {% if player.status == "Alive" %}
+              {% if current_player.attack > 0 %}
+                <h3><button class="press"><a href="/attack/{{player.id}}">Fight</a></button></h3>
+              {% elif current_player.attack == 0 %}
+                <h3>You have no attack tokens!</h3>
+              {% endif %}
+            {% endif %}
+          {% endif %}
+
+        </div>
+      {% endfor %}
+    </div>
+
+    <div id="dead">
+      <h1>[ Inactive ]</h1>
+      {% for dead in deads %}
+        <div class="single_player">
+          {% if dead.player.user.id == curr_user.id %}
+            <h3 class="me">My Character</h3>
+          {% endif %}
+          <img src="../static/main/images/Out.gif" height=100 width=100 alt="Mafia">
+          <p><span class="highlight">Character:</span> {{dead.player.user.alias}}</p>
+          <p><span><span class="highlight">Owner:</span> {{dead.player.user.name}}</p>
+          <p><span class="highlight">Class:</span> {{dead.player.class_type}}</p>
+          <p><span class="highlight">Status:</span> <span class="red">{{dead.player.status}}</span></p>
+          {% if dead.player.user.id == curr_user.id %}
+            <p><button class="press"><a href="/revive/{{dead.id}}">Use Coffee?</a></button></p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div id="user_stuff">
+    <div id="my_info">
+      <h3>My Character Info:</h3>
+      {% if current_player.class_type == "Mafia" %}
+        <img src="../static/main/images/Mafia.gif" height=100 width=100 alt="Mafia">
+      {% endif %}
+      {% if current_player.class_type == "Security" %}
+        <img src="../static/main/images/Security.gif" height=100 width=100 alt="Mafia">
+      {% endif %}
+      {% if current_player.class_type == "Programmer" %}
+        <img src="../static/main/images/Programmer.gif" height=100 width=100 alt="Mafia">
+      {% endif %}
+      <p>{{current_player.user.alias}}</p>
+      <p><span class="highlight2">Health:</span> {{current_player.health}}</p>
+      <p><span class="highlight2">Wealth:</span> ${{current_player.money}}</p>
+    </div>
+    <div id="bag">
+      <h3>My Bag</h3>
+      <p><img src="../static/main/images/bag.gif" height=75 width=75 alt="Attack"></p>
+      <p>Attack Tokens:<img src="../static/main/images/Attack.gif" height=100 width=100 alt="Attack">x{{current_player.attack}}</p>
+      <p>Medicine:<img src="../static/main/images/Medicine.gif" height=100 width=100 alt="Medicine">x{{current_player.medicine}} <button class="press"><a href="/use_item/{{current_player.id}}/medicine">USE</a></button></p>
+      <p>Super Coffee:<img src="../static/main/images/Coffee.gif" height=100 width=100 alt="Coffee">x{{current_player.coffee}} <button class="press"><a href="/use_item/{{current_player.id}}/coffee">USE</a></button></p>
+    </div>
+  </div>
+<body>
+</html>
