@@ -50,17 +50,19 @@ def create_page(request):
 def home(request):
 	now = datetime.now().strftime('%M')
 	increment = Increment.objects.first()
-	print increment.state
-	if int(now) == 0 and increment.state == 'False':
-		increment.state = 'True'
-		increment.save()
-		everyone = Player.objects.all()
-		for person in everyone:
-			person.money += 100
-			person.save()
-	elif int(now) != 0:
-		increment.state = 'False'
-		increment.save()
+	values = [1,2,3,4,5,6,7,8,9,10]
+	for i in values:
+		if int(now) == i and increment.state == 'False':
+			messages.add_message(request, messages.INFO, "Everybody got $100!")
+			increment.state = 'True'
+			increment.save()
+			everyone = Player.objects.all()
+			for person in everyone:
+				person.money += 100
+				person.save()
+		elif int(now) != i:
+			increment.state = 'False'
+			increment.save()
 
 	user = User.objects.filter(id=request.session['user_id']).first()
 	players = Player.objects.all()
